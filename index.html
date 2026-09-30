@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f3e8">
+  <title>WadiGuard — مراقبة الأودية</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23172726'/%3E%3Cpath d='M10 11l5 19 5-12 5 12 5-19' fill='none' stroke='%2342d8b1' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="engine.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+  <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-radio" viewBox="0 0 24 24"><circle cx="12" cy="10" r="2"/><path d="m12 12-4 9m4-9 4 9M7 5a7 7 0 0 0 0 10M17 5a7 7 0 0 1 0 10M4 2a11 11 0 0 0 0 16M20 2a11 11 0 0 1 0 16"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M9 21h6"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 7c4-5 6 5 10 0s6 5 10 0M2 12c4-5 6 5 10 0s6 5 10 0M2 17c4-5 6 5 10 0s6 5 10 0"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m4 17 6-6 4 3 6-9m-6 0h6v6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 8 3v7c0 5-8 10-8 10S4 17 4 12V5l8-3Z"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 2 8M3 3v7h7"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+  </defs></svg>
+  <aside class="sidebar">
+    <a class="brand" href="./" aria-label="WadiGuard الرئيسية"><span class="brand-mark"><svg viewBox="0 0 34 34"><path d="M5 8l6 20 6-14 6 14 6-20"/><path d="m14 6 3-3 3 3"/></svg></span><span><strong>Wadi<span>Guard</span></strong><small>عين على الوادي، أمان للجميع</small></span></a>
+    <div class="workspace-label">مساحة المراقبة <span>DEMO</span></div>
+    <nav aria-label="القائمة الرئيسية">
+      <button class="nav-item active" data-view="overview"><svg><use href="#i-grid"/></svg>نظرة عامة <span class="nav-dot"></span></button>
+      <button class="nav-item" data-view="stations"><svg><use href="#i-radio"/></svg>محطات الرصد <span class="nav-count">04</span></button>
+      <button class="nav-item" data-view="events"><svg><use href="#i-bell"/></svg>سجل التنبيهات <span class="nav-count" id="nav-alert-count">0</span></button>
+      <button class="nav-item" data-view="about"><svg><use href="#i-info"/></svg>عن النموذج</button>
+    </nav>
+    <div class="sidebar-wadi"><div class="tiny-label">الوادي النشط</div><div class="wadi-name"><span class="status-dot"></span> وادي السدر <svg><use href="#i-pin"/></svg></div><p>بيئة افتراضية · 4.1 كم</p><div class="mini-route"><i></i><span></span><i></i><span></span><i></i><span></span><i></i></div><div class="route-ends"><span>طرف A</span><span>طرف D</span></div></div>
+    <div class="sidebar-bottom"><div class="network"><svg><use href="#i-radio"/></svg><div>شبكة المحطات <small>اتصال LoRa محاكى</small></div><span class="status-dot"></span></div><div class="profile"><span class="avatar">م</span><div>مركز المراقبة<small>وضع العرض التجريبي</small></div><span class="version">v1.0</span></div></div>
+  </aside>
+  <div class="main-shell">
+    <header class="topbar"><div class="breadcrumb">مساحة المراقبة <span>/</span> <strong id="breadcrumb-view">نظرة عامة</strong></div><div class="topbar-end"><span class="demo-tag"><i></i> بيانات محاكاة</span><span class="topbar-divider"></span><svg><use href="#i-clock"/></svg><time id="header-clock" dir="ltr">18:00:00</time><button class="icon-button" id="sound-button" aria-label="تفعيل صوت التنبيهات" title="تفعيل صوت التنبيهات"><svg><use href="#i-bell"/></svg><span class="muted-mark"></span></button></div></header>
+    <main>
+      <div class="page-heading"><div><div class="eyebrow">WADI INTELLIGENCE PLATFORM</div><h1 id="page-title">كل نقطة تروي ما هو قادم<span>.</span></h1><p id="page-subtitle">رصد لحظي لحركة المياه، ورؤية مبكرة لما يحدث على امتداد الوادي.</p></div><button class="secondary-button" id="export-button"><svg><use href="#i-download"/></svg>تصدير القراءات</button></div>
+      <section class="metrics" aria-label="ملخص المحطات">
+        <article class="metric"><div class="metric-top"><span>المحطات المتصلة</span><span class="metric-icon mint"><svg><use href="#i-radio"/></svg></span></div><div class="metric-value">04 <span>/ 04</span></div><div class="metric-foot"><i class="status-dot"></i>جميع المحطات تعمل <span class="subtle">محاكاة</span></div></article>
+        <article class="metric"><div class="metric-top"><span>أعلى منسوب للمياه</span><span class="metric-icon blue"><svg><use href="#i-wave"/></svg></span></div><div class="metric-value"><b id="max-level">22</b> <span>سم</span><svg class="metric-spark" viewBox="0 0 100 28"><path id="metric-spark-path" d="M0 25 10 22 20 24 30 19 40 22 50 15 60 18 70 10 80 14 90 5 100 2"/></svg></div><div class="metric-foot"><span id="max-station">المحطة A · طرف الوادي</span></div></article>
+        <article class="metric"><div class="metric-top"><span>التنبيهات النشطة</span><span class="metric-icon amber"><svg><use href="#i-bell"/></svg></span></div><div class="metric-value"><b id="active-alerts">00</b><span id="alerts-description">تنبيه</span></div><div class="metric-foot" id="alerts-foot">المناسيب ضمن النطاق الطبيعي</div></article>
+        <article class="metric"><div class="metric-top"><span>مهلة التنبيه المبكر</span><span class="metric-icon violet"><svg><use href="#i-clock"/></svg></span></div><div class="metric-value"><b id="lead-time">—</b> <span>ثانية</span></div><div class="metric-foot" id="lead-foot">بانتظار رصد موجة بين المحطات</div></article>
+      </section>
+      <div id="view-overview" class="view">
+        <div class="dashboard-grid">
+          <section class="panel map-panel"><div class="panel-heading"><div><h2><svg><use href="#i-pin"/></svg>خريطة الوادي</h2><p>تتبّع الاتجاه من أي طرف على امتداد المجرى</p></div><span class="live-badge" id="live-badge"><i class="status-dot"></i> مباشر</span></div>
+            <div class="map-canvas" id="map-container">
+              <div class="map-top-label"><span class="map-coordinate" dir="ltr">24° 38′ N &nbsp; 46° 42′ E</span><span>خريطة توضيحية</span></div>
+              <svg id="wadi-map" viewBox="0 0 740 555" role="img" aria-label="خريطة توضيحية لأربع محطات على امتداد الوادي؛ اختر محطة لعرض بياناتها">
+                <defs><pattern id="map-grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#c7d1be" stroke-width=".5"/></pattern><linearGradient id="river-gradient" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b907d"/><stop offset="1" stop-color="#246957"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="5"/></filter></defs>
+                <rect width="740" height="555" fill="#eaf0e3"/><rect width="740" height="555" fill="url(#map-grid)"/>
+                <g id="contours" fill="none" stroke="#9dad94" stroke-width=".8" opacity=".48"></g>
+                <g stroke="#a39074" stroke-width="2" fill="none" opacity=".32"><path d="M-20 400C145 390 130 283 227 285S354 431 466 394 633 372 770 435" stroke-dasharray="5 5"/><path d="M565-20C510 140 686 230 554 342S509 503 675 580"/><path d="M559 343 724 343"/></g>
+                <g id="settlement" fill="#c6cfb9" stroke="#97a68d" stroke-width=".6" opacity=".65"><rect x="580" y="433" width="18" height="13" rx="2" transform="rotate(-14 580 433)"/><rect x="606" y="426" width="25" height="16" rx="2" transform="rotate(-14 606 426)"/><rect x="581" y="458" width="23" height="15" rx="2" transform="rotate(-14 581 458)"/><rect x="617" y="452" width="15" height="20" rx="2" transform="rotate(-14 617 452)"/><rect x="643" y="440" width="18" height="12" rx="2" transform="rotate(-14 643 440)"/><rect x="650" y="465" width="22" height="18" rx="2" transform="rotate(-14 650 465)"/></g>
+                <g fill="#6b8068" font-size="11" font-family="Tahoma, sans-serif"><text x="159" y="145">المرتفعات الشمالية</text><text x="582" y="502">المنطقة السكنية</text><text x="140" y="385">مجرى الوادي</text></g>
+                <path d="M257-30C218 37 255 61 277 94S295 145 354 170 424 195 401 222 346 254 346 291 309 324 332 351 379 359 408 390 439 423 474 440 510 451 510 468 491 519 552 586" fill="none" stroke="#b9cfbd" stroke-width="34" opacity=".65"/>
+                <path id="river-path" d="M257-30C218 37 255 61 277 94S295 145 354 170 424 195 401 222 346 254 346 291 309 324 332 351 379 359 408 390 439 423 474 440 510 451 510 468 491 519 552 586" fill="none" stroke="url(#river-gradient)" stroke-width="12"/>
+                <path d="M257-30C218 37 255 61 277 94S295 145 354 170 424 195 401 222 346 254 346 291 309 324 332 351 379 359 408 390 439 423 474 440 510 451 510 468 491 519 552 586" fill="none" stroke="#73bba6" opacity=".55" stroke-width="1.5"/>
+                <path class="flow-line" d="M257-30C218 37 255 61 277 94S295 145 354 170 424 195 401 222 346 254 346 291 309 324 332 351 379 359 408 390 439 423 474 440 510 451 510 468 491 519 552 586" fill="none" stroke="#a4e0c4" stroke-width="2" stroke-dasharray="3 33"/>
+                <g id="flow-arrows" fill="none" stroke="#fff8e7" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="map-stations"></g>
+              </svg>
+              <div class="compass"><span>N</span><svg viewBox="0 0 24 32"><path d="m12 2 8 26-8-5-8 5Z" fill="#9caea5"/><path d="M12 2v21l-8 5Z" fill="#394d43"/></svg></div>
+              <div class="map-scale"><span>0</span><i></i><span>1 كم</span></div><div class="map-tip">اضغط على المحطة لعرض التفاصيل</div>
+            </div>
+            <div class="map-legend"><span><i class="legend-dot normal"></i>طبيعي</span><span><i class="legend-dot warning"></i>تحذير / تنبيه مبكر</span><span><i class="legend-dot danger"></i>خطر</span><span class="flow-key" id="map-flow-key">↓ اتجاه محدد: A إلى D</span></div>
+          </section>
+          <div class="insights-column">
+            <section class="panel chart-panel"><div class="panel-heading"><div><h2>منسوب المياه</h2><p>تغيّر المنسوب عبر المحطات <span class="unit-label">/ سم</span></p></div><span class="small-pill">آخر 4 دقائق</span></div><div class="chart-wrap"><canvas id="level-chart" role="img" aria-label="رسم بياني لمناسيب المياه خلال آخر أربع دقائق، اختر محطة على الخريطة لعرض قراءتها"></canvas></div><div class="chart-legend" id="chart-legend"></div></section>
+          </div>
+        </div>
+      </div>
+      <div id="view-stations" class="view" hidden><section class="panel station-table-panel"><div class="panel-heading"><h2>قراءات الشبكة</h2><span class="small-pill" id="table-direction" dir="ltr">A → B → C → D</span></div><div class="table-scroll"><table><thead><tr><th>المحطة</th><th>الموقع على المجرى من A</th><th>منسوب المياه</th><th>سرعة الارتفاع</th><th>الحالة المحلية</th><th>الوصول المتوقع / الاتجاه</th></tr></thead><tbody id="stations-table"></tbody></table></div></section></div>
+      <div id="view-events" class="view" hidden><section class="panel"><div class="panel-heading"><div><h2>سجل الرصد والتنبيهات</h2><p>التسلسل الزمني منذ بدء التجربة · الأحدث أولًا</p></div><select id="event-filter" aria-label="تصفية الأحداث"><option value="all">كل الأحداث</option><option value="early">الإنذار المبكر</option><option value="danger">الخطر</option><option value="warning">التحذير</option><option value="rise">بداية الارتفاع</option><option value="direction">الاتجاه والسرعة</option></select></div><div id="full-events"></div></section></div>
+      <div id="view-about" class="view" hidden><section class="panel about-panel"><span class="eyebrow">FROM A SINGLE READING TO A CONNECTED PICTURE</span><h2>الرصد من الطرفين يوضّح ما هو قادم.</h2><p>يربط WadiGuard أربع محطات على مجرى افتراضي بطول 4.1 كم. كل محطة ترصد منسوب المياه وسرعة تغيّره، ويستخدم النظام رصد الارتفاع في اتجاه التدفق لتوليد تنبيه للمحطات التالية قبل وصول الموجة.</p><div class="about-steps"><article><b>01</b><h3>نقيس</h3><p>قراءة كل ثانية محاكاة. سرعة الارتفاع هي فرق المنسوب خلال آخر 5 ثوانٍ محسوبًا بالسنتيمتر في الدقيقة.</p></article><article><b>02</b><h3>نربط</h3><p>المسافات A–B: 1200 م، B–C: 1400 م، C–D: 1500 م. عند سرعة مفترضة 4 م/ث، أزمنة الانتقال 5 دقائق، و5 دقائق و50 ثانية، و6 دقائق و15 ثانية. ينعكس الترتيب إذا دخلت المياه من D.</p></article><article><b>03</b><h3>ننبّه</h3><p>يبدأ التنبيه الاستباقي عند ارتفاع المحطة السابقة 12 سم فوق خط الأساس بسرعة تتجاوز 6 سم/دقيقة.</p></article></div><h3>الحالة المحلية والإنذار المبكر</h3><p>طبيعي: أقل من 65 سم. تحذير: من 65 إلى أقل من 110 سم. خطر: 110 سم فأعلى. يمكن أن تكون قراءة المحطة طبيعية مع وجود تنبيه مبكر بسبب ما رُصد أعلى الوادي.</p><h3>حدود النموذج</h3><p>هذه تجربة برمجية تعليمية، ولا تتصل بحساسات أو شبكة LoRa فعلية. الخريطة والموقع افتراضيان. تقدير الوصول يعتمد على المسافة وسرعة الموجة المفترضة أو المقدّرة من التسلسل الزمني وليس نموذجًا هيدرولوجيًا معتمدًا، ولا يُستخدم لاتخاذ قرارات سلامة ميدانية. يؤثر اختيار سرعة التشغيل في الزمن المعروض فقط ولا يغيّر سلوك الموجة.</p><h3>اتجاه المياه في العرض</h3><p>اختر الاتجاه من مختبر المحاكاة: من A إلى D أو بالعكس. تتحرك المياه والأسهم وفق اختيارك. هذا اتجاه محدد للتجربة؛ لا يعني أن ترتيب الحساسات يحدد اتجاه الجريان ميدانيًا، خصوصًا في المجرى المستوي. تحتاج الحالات الفعلية إلى رصد مناسب والتحقق من تسلسل الموجة.</p><h3>سرعة المياه ليست سرعة ارتفاع المنسوب</h3><p>سرعة حركة المياه بوحدة م/ث تحتاج قياسًا مناسبًا مثل رادار السرعة. سرعة ارتفاع المنسوب بوحدة سم/دقيقة هي تغيّر ارتفاع المياه عند الحساس. كذلك قد تختلف سرعة انتشار الموجة عن سرعة المياه نفسها؛ يفترض النموذج تساويهما أولًا ثم يحدّث سرعة الموجة المستخدمة في توقع الوصول من الرصد. <a href="https://www.usgs.gov/publications/use-doppler-velocity-radars-monitor-and-predict-debris-and-flood-wave-velocities-and" target="_blank" rel="noopener">مرجع USGS حول رصد سرعة المياه والموجة وزمن الانتقال</a>.</p><h3>الانتقال إلى نموذج مادي</h3><p>يمكن لاحقًا ربط 3–4 وحدات ESP32 بحساسات مسافة ومعايرة المنسوب من ارتفاع الحساس عن قاع المجرى. ترسل القراءات مع معرّف المحطة والطابع الزمني إلى بوابة LoRa ثم إلى النظام المركزي؛ يلزم التحقق من جودة القراءات وفقد الاتصال قبل الاستخدام الفعلي.</p></section></div>
+      <section class="simulation-bar" aria-label="أدوات المحاكاة">
+        <div class="simulation-label"><span class="simulation-icon"><svg><use href="#i-wave"/></svg></span><div><h2>مختبر المحاكاة <span>جرّب بنفسك</span></h2><p>اختر اتجاه السيل، ثم أطلق الموجة وتابع المحطات.</p></div><span class="lab-route" id="lab-route" dir="ltr">A → B → C → D</span></div>
+        <div class="simulation-controls">
+          <label class="lab-field direction-field" for="flow-source">اتجاه المياه<select id="flow-source"><option value="forward">من A إلى D ↓</option><option value="reverse">من D إلى A ↑</option></select></label>
+          <label class="lab-field" for="scenario">سيناريو التدفق<select id="scenario"><option value="flash">موجة سيل مفاجئة</option><option value="gradual">ارتفاع تدريجي</option><option value="double">موجتان متتاليتان</option></select></label>
+          <label class="lab-field" for="water-speed">سرعة المياه · مفترضة<select id="water-speed"><option value="0.5">0.5 م/ث</option><option value="1">1 م/ث</option><option value="2">2 م/ث</option><option value="4" selected>4 م/ث</option><option value="6">6 م/ث</option><option value="10">10 م/ث</option><option value="15">15 م/ث</option></select></label>
+          <button class="primary-button" id="launch-button"><svg><use href="#i-wave"/></svg>إطلاق الموجة</button>
+          <div class="playback-controls"><button id="play-button" class="icon-button control-button" aria-label="إيقاف المحاكاة مؤقتًا" title="إيقاف مؤقت"><span class="pause-icon">Ⅱ</span></button><label class="lab-field playback-field" for="speed">سرعة العرض<select id="speed"><option value="1">1×</option><option value="2" selected>2×</option><option value="5">5×</option><option value="20">20×</option><option value="60">60×</option></select></label><button id="reset-button" class="icon-button control-button" aria-label="إعادة ضبط المحاكاة" title="إعادة ضبط"><svg><use href="#i-reset"/></svg></button></div>
+        </div>
+        <p class="lab-note">تغيير اتجاه المياه أو سرعتها يبدأ تجربة جديدة. الأسهم على الخريطة تتبع الاتجاه المختار.</p>
+      </section>
+      <footer><span><i class="status-dot"></i> WadiGuard <span class="footer-dot">·</span> نرى المؤشرات اليوم، لنستعد لما يأتي.</span><span>نموذج أولي تجريبي <span class="footer-dot">/</span> غير مخصص للإنذار الميداني</span></footer>
+    </main>
+  </div>
+  <dialog id="station-dialog"><div class="dialog-header"><h2 id="dialog-title"></h2><button id="close-dialog" class="icon-button" aria-label="إغلاق">×</button></div><div id="dialog-content"></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "wadiguard-prototype",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive Arabic wadi early-warning simulation",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node scripts/build.js",
+    "test": "node tests/engine.test.js"
+  }
+}
